@@ -6,9 +6,13 @@ import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.zxing.FormatException;
@@ -18,7 +22,6 @@ import java.util.logging.Logger;
 public class MainActivity extends Activity
 {
     QRCodeView qrcvodeView = new QRCodeView();
-    QRcodeModel model = new QRcodeModel();
             
     /** Called when the activity is first created. */
     @Override
@@ -37,9 +40,26 @@ public class MainActivity extends Activity
          });   
     }
     
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case R.id.quit:
+        this.finish();
+    
+    case R.id.load:
+        
+    }return true;}
+    
     public void Update(BitmapDrawable bitdraw){
-    TextView textView = (TextView)this.findViewById(R.id.mainTextView);
-    textView.setBackgroundDrawable(bitdraw);
+    ImageView imageView = (ImageView)this.findViewById(R.id.imageView1);
+    imageView.setBackgroundDrawable(bitdraw);
 }
     
     public EditText getData(){

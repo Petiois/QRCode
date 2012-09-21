@@ -100,12 +100,19 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/linearLayout4"
+        
         >
-    <TextView  
+    <!--<TextView  
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content" 
         android:id="@+id/mainTextView"
-        />
+        />-->
+        <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
     </LinearLayout>
 
 </RelativeLayout>

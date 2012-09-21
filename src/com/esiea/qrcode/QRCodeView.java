@@ -15,23 +15,18 @@ import android.widget.TextView;
  *
  * @author Petiois
  */
-public class QRCodeView implements IData, IHiddenData,IDisplayQRCode {
+public class QRCodeView implements IView {
 
+    public IQRCodeController icontroller;
     public QRCodeController qrcodeController = new QRCodeController();
     public String newData;
     public String nexHiddenData;
            
-    public Bitmap getQRCode() {
-        return qrcodeController.updateQRCode(newData,nexHiddenData);
-    }
-    
-
-    public void displayQRCode(Bitmap bit) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
     
     public BitmapDrawable Update(){
-        BitmapDrawable bitDraw = new BitmapDrawable(getQRCode());
+        Bitmap bit = null;
+        bit = icontroller.updateQRCode(newData, nexHiddenData);
+        BitmapDrawable bitDraw = new BitmapDrawable(bit);
         return bitDraw;
 }
 
