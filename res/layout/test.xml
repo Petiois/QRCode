@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:id="@+id/ScrollView02" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+<HorizontalScrollView android:id="@+id/HorizontalScrollView01" 
+                      android:layout_width="wrap_content" 
+                      android:layout_height="wrap_content">
+<ImageView android:id="@+id/ImageView01"
+           android:src="@drawable/quit" 
+           android:isScrollContainer="true" 
+           android:layout_height="fill_parent" 
+           android:layout_width="fill_parent" 
+           android:adjustViewBounds="true">
+</ImageView>
+</HorizontalScrollView>
+</ScrollView>

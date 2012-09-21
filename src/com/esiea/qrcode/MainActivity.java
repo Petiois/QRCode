@@ -1,9 +1,6 @@
 package com.esiea.qrcode;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,11 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.google.zxing.FormatException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MainActivity extends Activity
 {
@@ -52,6 +44,9 @@ public class MainActivity extends Activity
     case R.id.quit:
         this.finish();
     case R.id.load:
+        
+    case R.id.save:
+        qrcvodeView.saveQRCode(this);
         
     }return true;}
     

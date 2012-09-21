@@ -4,6 +4,7 @@
  */
 package com.esiea.qrcode;
 
+import android.app.Activity;
 import android.widget.EditText;
 
 /**
@@ -17,5 +18,7 @@ public interface IView {
     public void setNewData(EditText editText);
     
     public void setHiddenData(EditText editText);
+    
+    public void saveQRCode(Activity activity);
     
 }
