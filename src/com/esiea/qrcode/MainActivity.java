@@ -34,8 +34,7 @@ public class MainActivity extends Activity
              public void onClick(View v) {
                  qrcvodeView.setNewData(getData());
                  qrcvodeView.setHiddenData(getHiddenData());
-                 Update(qrcvodeView.Update());
-                 
+                 Update(qrcvodeView.Update()); 
              }
          });   
     }
@@ -52,7 +51,6 @@ public class MainActivity extends Activity
     switch (item.getItemId()) {
     case R.id.quit:
         this.finish();
-    
     case R.id.load:
         
     }return true;}

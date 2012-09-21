@@ -9,6 +9,7 @@ C:\Users\Petiois\Documents\NetBeansProjects\QRCode\bin\classes\com\esiea\qrcode\
 C:\Users\Petiois\Documents\NetBeansProjects\QRCode\bin\classes\com\esiea\qrcode\QRcodeModel.class \
 C:\Users\Petiois\Documents\NetBeansProjects\QRCode\bin\classes\com\esiea\qrcode\QRCodeView.class \
 C:\Users\Petiois\Documents\NetBeansProjects\QRCode\bin\classes\com\esiea\qrcode\R$attr.class \
+C:\Users\Petiois\Documents\NetBeansProjects\QRCode\bin\classes\com\esiea\qrcode\R$drawable.class \
 C:\Users\Petiois\Documents\NetBeansProjects\QRCode\bin\classes\com\esiea\qrcode\R$id.class \
 C:\Users\Petiois\Documents\NetBeansProjects\QRCode\bin\classes\com\esiea\qrcode\R$layout.class \
 C:\Users\Petiois\Documents\NetBeansProjects\QRCode\bin\classes\com\esiea\qrcode\R$menu.class \

@@ -17,7 +17,6 @@ import android.widget.TextView;
  */
 public class QRCodeView implements IView {
 
-    public IQRCodeController icontroller;
     public QRCodeController qrcodeController = new QRCodeController();
     public String newData;
     public String nexHiddenData;
@@ -25,7 +24,7 @@ public class QRCodeView implements IView {
     
     public BitmapDrawable Update(){
         Bitmap bit = null;
-        bit = icontroller.updateQRCode(newData, nexHiddenData);
+        bit = qrcodeController.updateQRCode(newData, nexHiddenData);
         BitmapDrawable bitDraw = new BitmapDrawable(bit);
         return bitDraw;
 }
