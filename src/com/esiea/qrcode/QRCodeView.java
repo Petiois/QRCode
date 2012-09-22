@@ -13,11 +13,6 @@ import android.graphics.drawable.BitmapDrawable;
  */
 public class QRCodeView implements IView
 {
-
-
-    private String newData;
-    private String nexHiddenData;
-    private QRCodeController qrcodeController;
     private final MainActivity view;
 
     QRCodeView(MainActivity aThis)
@@ -39,10 +34,15 @@ public class QRCodeView implements IView
     {
         return this.view.getHiddenData();
     }
-    
+
     public Activity getActivity()
     {
         return this.view;
+    }
+
+    public void showMessage(String message)
+    {
+        this.view.showMessage(message);
     }
 
 }

@@ -23,8 +23,7 @@ public class QRcodeModel implements IQRCodeModel
 
     public Bitmap  generateBitmap()
     {
-
-//get a byte matrix for the data
+        //get a byte matrix for the data
         BitMatrix matrix;
         com.google.zxing.Writer writer = new QRCodeWriter();
         com.google.zxing.Reader reader = new QRCodeMultiReader();
@@ -38,22 +37,20 @@ public class QRcodeModel implements IQRCodeModel
             com.google.zxing.qrcode.encoder.DataInQRCode.setData(this.data);
             com.google.zxing.qrcode.encoder.DataInQRCode.setHiddenData(this.hiddenData);
             matrix = codeWriter.encode(com.google.zxing.qrcode.encoder.DataInQRCode.getData(), BarcodeFormat.QR_CODE, width, height, hints);
-            //matrix = codeWriter.encode(data, BarcodeFormat.QR_CODE, width, height,hints);
         }
         catch (com.google.zxing.WriterException e)
         {
             return null;
         }
-
-//generate an image from the byte matrix
+        //generate an image from the byte matrix
         int width = matrix.getWidth();
         int height = matrix.getHeight();
 
-//create buffered image to draw to
+        //create buffered image to draw to
         Bitmap  image;
         image = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
 
-//iterate through the matrix and draw the pixels to the image
+        //iterate through the matrix and draw the pixels to the image
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -69,7 +66,6 @@ public class QRcodeModel implements IQRCodeModel
                     grayValue = 0;
                 }
                 image.setPixel(x, y, grayValue == 0 ? Color.BLACK : Color.WHITE);
-                //  image.setRGB(x, y, grayValue);
             }
         }
         this.bitmap=image;
@@ -87,7 +83,8 @@ public class QRcodeModel implements IQRCodeModel
         this.hiddenData = hiddenData;
     }
 
-    public Bitmap getBitmap() {
+    public Bitmap getBitmap()
+    {
         return bitmap;
     }
 

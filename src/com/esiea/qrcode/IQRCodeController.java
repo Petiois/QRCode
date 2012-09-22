@@ -10,4 +10,5 @@ public interface IQRCodeController
 {
 
     public Bitmap updateQRCode(String data,String Hiddendata);
+    
 }

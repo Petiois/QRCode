@@ -2,7 +2,6 @@ package com.esiea.qrcode;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,7 +11,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,29 +18,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class MainActivity extends Activity
 {
     QRCodeView qrcvodeView = new QRCodeView(this);
-    QRCodeController qrCodeController = new QRCodeController(qrcvodeView);
+    QRCodeController qrCodeController = null;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        qrCodeController = QRCodeController.getController(qrcvodeView);
+        this.qrCodeController.setActiveView(this.qrcvodeView);
         setContentView(R.layout.main);
         Button bouton = (Button)findViewById(R.id.button1);
         bouton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-               
+
                 qrCodeController.generateAndDisplayQRcode();
-                DisplayPopUp(qrcvodeView.getData(),qrcvodeView.getHiddenData());
             }
         });
+        this.qrCodeController.askForUpdate();
     }
 
     @Override
@@ -70,20 +69,6 @@ public class MainActivity extends Activity
         }
         return true;
     }
-    
-    public void DisplayPopUp(String data, String hiddendata){
-        String text = "Data : "+data+"\n"+"\n"+"Hidden data : "+hiddendata;
-        
-        Builder builder = new AlertDialog.Builder(this); 
-        builder.setTitle("Les données sont :"); 
-        builder.setMessage( text );
-        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int wichButton) {
-            }
-        });
-        builder.show(); 
-
-    }
 
     public void Update(BitmapDrawable bitdraw)
     {
@@ -106,33 +91,49 @@ public class MainActivity extends Activity
         return getDataString;
     }
 
-    private void load() 
+    private void load()
     {
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.setType("image/*");
         startActivityForResult(i, 1);
     }
-    
-    protected void onActivityResult(int requestCode, int resultCode,Intent imageReturnedIntent) 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,Intent imageReturnedIntent)
     {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch (requestCode) 
+        switch (requestCode)
         {
-            case 1:
-                if (resultCode == RESULT_OK) 
-                {
-                    Uri selectedImage = imageReturnedIntent.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String filePath = cursor.getString(columnIndex);
-                    cursor.close();
-                    Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-                    this.qrCodeController.analyseImage(yourSelectedImage);
-                }
+        case 1:
+            if (resultCode == RESULT_OK)
+            {
+                Uri selectedImage = imageReturnedIntent.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String filePath = cursor.getString(columnIndex);
+                cursor.close();
+                Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+                this.qrCodeController.analyseImage(yourSelectedImage);
+            }
         }
     }
-    
+
+    public void showMessage(String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+        .setCancelable(false)
+        .setNegativeButton("Ok", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }
 
