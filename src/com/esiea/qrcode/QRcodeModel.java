@@ -5,28 +5,22 @@
 package com.esiea.qrcode;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Environment;
 import android.provider.MediaStore;
-import com.google.zxing.FormatException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.multi.qrcode.QRCodeMultiReader;
 import com.google.zxing.qrcode.QRCodeWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 
 public class QRcodeModel implements IQRCodeModel  {
   
     public String data;
     public String hiddenData;
-    private int GenerationNB =0;
     private Bitmap image=null;
 
     public Bitmap getImage() {
@@ -96,7 +90,6 @@ public class QRcodeModel implements IQRCodeModel  {
 
             }
         }
-        GenerationNB++;
         this.image = image;
         return image;
 
@@ -115,12 +108,12 @@ public class QRcodeModel implements IQRCodeModel  {
         File repertory = new File("/sdcard/QRCode");
         if (!repertory.exists()) {
             repertory.mkdir();}
-        File file = new File(repertory,"newQRCode".concat(Integer.toString(GenerationNB))+".jpeg");
+        File file = new File(repertory,"QRCode_"+data+".jpg");
         fOut = new FileOutputStream(file);
         bit.compress(Bitmap.CompressFormat.JPEG, 90, fOut);
         fOut.flush();
         fOut.close();
-        MediaStore.Images.Media.insertImage(activity.getContentResolver(),file.getAbsolutePath(),file.getName(),file.getName());
+        MediaStore.Images.Media.insertImage( activity.getContentResolver(),"/sdcard/QRCode",file.getName(),file.getName());
     }
     
 }
