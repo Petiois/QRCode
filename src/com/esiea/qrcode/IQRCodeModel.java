@@ -5,12 +5,12 @@
 package com.esiea.qrcode;
 
 import android.graphics.Bitmap;
-import com.google.zxing.FormatException;
 
-public interface IQRCodeModel {
+public interface IQRCodeModel
+{
 
-    public Bitmap  test();
-    
+    public Bitmap  generateBitmap();
+
     public void setData(String string);
-        
+
 }

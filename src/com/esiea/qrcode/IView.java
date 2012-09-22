@@ -4,21 +4,13 @@
  */
 package com.esiea.qrcode;
 
-import android.app.Activity;
-import android.widget.EditText;
+public interface IView
+{
 
-/**
- *
- * @author Petiois
- */
-public interface IView {
-    
     public QRcodeModel model = new QRcodeModel();
-    
-    public void setNewData(EditText editText);
-    
-    public void setHiddenData(EditText editText);
-    
-    public void saveQRCode(Activity activity);
-    
+
+    public String getData();
+
+    public String getHiddenData();
+
 }
