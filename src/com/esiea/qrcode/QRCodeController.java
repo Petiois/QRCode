@@ -104,6 +104,7 @@ public class QRCodeController implements IQRCodeController
         }
         catch (Exception ex)
         {
+            this.qrView.showMessage("L'image chargée n'est pas un QR Code");
             Log.w("toto","une execption est survenue "+ ex.toString());
         }
     }
