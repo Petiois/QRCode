@@ -56,7 +56,7 @@ public class MainActivity extends Activity
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
-        {
+        { 
         case R.id.quit:
             this.finish();
             break;
