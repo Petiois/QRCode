@@ -52,7 +52,7 @@ public class QRCodeController implements IQRCodeController
         {
             this.qrView.showMessage("Veuillez entrer des donnes !");
         }
-        if (4*hiddenData.length()>=data.length())
+        else if (4*hiddenData.length()>data.length())
         {
             this.qrView.showMessage("Le QRcode ne peut pas contenir toutes les données cachées, veuillez réduire la taille de ces données");
         }
@@ -105,12 +105,7 @@ public class QRCodeController implements IQRCodeController
             String hiddenData = com.google.zxing.qrcode.encoder.DataInQRCode.getHiddenDataEmmbeddedInQRCode();
             this.qrView.showMessage("Données claire : "+showedData+"\n\n"+"Données cryptées : "+hiddenData);
         }
-                
-//        catch (Exception ex)
-//        {
-//            this.qrView.showMessage(ex.toString());
-//            Log.w("toto","une execption est survenue "+ ex.toString());
-//        }
+
         catch (NotFoundException ex)
         {
             this.qrView.showMessage("Aucun QRcode trouvé");
