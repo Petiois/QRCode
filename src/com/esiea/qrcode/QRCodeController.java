@@ -10,6 +10,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.provider.MediaStore;
 import android.util.Log;
 import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.android.RGBLuminance;
 import com.google.zxing.common.GlobalHistogramBinarizer;
@@ -102,10 +105,31 @@ public class QRCodeController implements IQRCodeController
             String hiddenData = com.google.zxing.qrcode.encoder.DataInQRCode.getHiddenDataEmmbeddedInQRCode();
             this.qrView.showMessage("Données claire : "+showedData+"\n\n"+"Données cryptées : "+hiddenData);
         }
-        catch (Exception ex)
+                
+//        catch (Exception ex)
+//        {
+//            this.qrView.showMessage(ex.toString());
+//            Log.w("toto","une execption est survenue "+ ex.toString());
+//        }
+        catch (NotFoundException ex)
         {
-            this.qrView.showMessage("L'image chargée n'est pas un QR Code");
-            Log.w("toto","une execption est survenue "+ ex.toString());
+            this.qrView.showMessage("Aucun QRcode trouvé");
+            Log.w("Notfound","une execption est survenue "+ ex.toString());
+        }
+        catch (ChecksumException ex)
+        {
+            this.qrView.showMessage("QRcode détecté mais non valide");
+            Log.w("Checksum","une execption est survenue "+ ex.toString());
+        }
+        catch (FormatException ex)
+        {
+            this.qrView.showMessage("Problème de format de QRcode");
+            Log.w("FormatEx","une execption est survenue "+ ex.toString());
+        }
+         catch (Exception ex)
+        {
+            this.qrView.showMessage("Une erreur inconnue est survenue");
+            Log.w("OtherEx","une execption est survenue "+ ex.toString());
         }
     }
 
