@@ -4,8 +4,10 @@
  */
 package com.esiea.qrcode;
 
-public interface IView
-{
+import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
+
+public interface IView {
 
     public QRcodeModel model = new QRcodeModel();
 
@@ -13,4 +15,9 @@ public interface IView
 
     public String getHiddenData();
 
+    public void Update(BitmapDrawable bitmap);
+
+    public Activity getActivity();
+
+    public void showMessage(String message);
 }
