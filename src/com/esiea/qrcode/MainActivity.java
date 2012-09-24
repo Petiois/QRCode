@@ -19,117 +19,126 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class MainActivity extends Activity
-{
+public class MainActivity extends Activity {
+
     QRCodeView qrcvodeView = new QRCodeView(this);
     QRCodeController qrCodeController = null;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         qrCodeController = QRCodeController.getController(qrcvodeView);
         this.qrCodeController.setActiveView(this.qrcvodeView);
         setContentView(R.layout.main);
-        Button bouton = (Button)findViewById(R.id.button1);
-        bouton.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
+        Button button = (Button) findViewById(R.id.button1);
+        button.setOnClickListener(new View.OnClickListener() {
+            //Ask to the controller to generate a new QRcode (Bitmap)
+            public void onClick(View v) {
 
                 qrCodeController.generateAndDisplayQRcode();
             }
         });
+        //Ask control to the controller to update the display
         this.qrCodeController.askForUpdate();
     }
 
+    /**
+     * Called when the menu is displayed created.
+     */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
+    /**
+     * Listener for the menu's buttons
+     */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        { 
-        case R.id.quit:
-            this.qrCodeController.destroyController();
-            this.finish();
-            break;
-        case R.id.save:
-            this.qrCodeController.savePicture();
-            break;
-        case R.id.load:
-            this.load();
-            break;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.quit:
+                //Destroy the current controller
+                this.qrCodeController.destroyController();
+                //Close the application
+                this.finish();
+                break;
+            case R.id.save:
+                this.qrCodeController.savePicture();
+                break;
+            case R.id.load:
+                this.load();
+                break;
         }
         return true;
     }
 
-    public void Update(BitmapDrawable bitdraw)
-    {
-        ImageView imageView = (ImageView)this.findViewById(R.id.imageView1);
+    /**
+     * Update the ImageView to display the generated QRcode
+     */
+    public void Update(BitmapDrawable bitdraw) {
+        ImageView imageView = (ImageView) this.findViewById(R.id.imageView1);
         imageView.setBackgroundDrawable(bitdraw);
     }
 
-    public String getData()
-    {
+    /**
+     * All setters and getters
+     */
+    public String getData() {
         EditText findViewById = (EditText) this.findViewById(R.id.editText1);
         String getDataString = findViewById.getText().toString();
         return getDataString;
     }
 
-    public String getHiddenData()
-    {
+    public String getHiddenData() {
 
         EditText findViewById = (EditText) this.findViewById(R.id.EditText02);
         String getDataString = findViewById.getText().toString();
         return getDataString;
     }
 
-    private void load()
-    {
+    /**
+     * Load an image from another application (Gallery,...)
+     */
+    private void load() {
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.setType("image/*");
         startActivityForResult(i, 1);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,Intent imageReturnedIntent)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch (requestCode)
-        {
-        case 1:
-            if (resultCode == RESULT_OK)
-            {
-                Uri selectedImage = imageReturnedIntent.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String filePath = cursor.getString(columnIndex);
-                cursor.close();
-                Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-                this.qrCodeController.analyseImage(yourSelectedImage);
-            }
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String filePath = cursor.getString(columnIndex);
+                    cursor.close();
+                    Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+                    this.qrCodeController.analyseImage(yourSelectedImage);
+                }
         }
     }
 
-    public void showMessage(String message)
-    {
+    /**
+     * Display a popup with the parameter "message". It has been called by the
+     * view
+     */
+    public void showMessage(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
-        .setCancelable(false)
-        .setNegativeButton("Ok", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int id)
-            {
+                .setCancelable(false)
+                .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
             }
         });

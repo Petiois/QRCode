@@ -9,40 +9,49 @@ import android.graphics.drawable.BitmapDrawable;
 
 /**
  *
- * @author Petiois
+ * @author Francois
  */
-public class QRCodeView implements IView
-{
+public class QRCodeView implements IView {
+
     private final MainActivity view;
 
-    QRCodeView(MainActivity aThis)
-    {
+    /**
+     * Class constructor who instance an new view. Argument : a MainActivity
+     */
+    QRCodeView(MainActivity aThis) {
         this.view = aThis;
     }
 
-    public void Update(BitmapDrawable bitmap)
-    {
+    /**
+     * Update the QRCode. Call the Update method of the MainActivity class, give
+     * control to the MainActivity Argument : BitmapDraxable.
+     */
+    public void Update(BitmapDrawable bitmap) {
         this.view.Update(bitmap);
     }
 
-    public String getData()
-    {
+    /**
+     * All getters and setters of the class
+     *
+     */
+    public String getData() {
         return this.view.getData();
     }
 
-    public String getHiddenData()
-    {
+    public String getHiddenData() {
         return this.view.getHiddenData();
     }
 
-    public Activity getActivity()
-    {
+    public Activity getActivity() {
         return this.view;
     }
 
-    public void showMessage(String message)
-    {
+    /**
+     * Give control to the MainActivity to display a popup message which is the
+     * argument "message". This method has been called by the controller
+     *
+     */
+    public void showMessage(String message) {
         this.view.showMessage(message);
     }
-
 }

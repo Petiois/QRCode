@@ -14,21 +14,25 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import java.util.EnumMap;
 
-public class QRcodeModel implements IQRCodeModel
-{
+/**
+ *
+ * @author Francois
+ */
+public class QRcodeModel implements IQRCodeModel {
 
     public String data;
     public String hiddenData;
     private Bitmap bitmap;
 
-    public Bitmap  generateBitmap()
-    {
+    /*
+     * Generation of the QRCode. This fonction return a Bitmap as QRCode.
+     */
+    public Bitmap generateBitmap() {
         //get a byte matrix for the data
         BitMatrix matrix;
         com.google.zxing.Writer writer = new QRCodeWriter();
         com.google.zxing.Reader reader = new QRCodeMultiReader();
-        try
-        {
+        try {
             int width = 200;
             int height = 200;
             QRCodeWriter codeWriter = new QRCodeWriter();
@@ -37,9 +41,7 @@ public class QRcodeModel implements IQRCodeModel
             com.google.zxing.qrcode.encoder.DataInQRCode.setData(this.data);
             com.google.zxing.qrcode.encoder.DataInQRCode.setHiddenData(this.hiddenData);
             matrix = codeWriter.encode(com.google.zxing.qrcode.encoder.DataInQRCode.getData(), BarcodeFormat.QR_CODE, width, height, hints);
-        }
-        catch (com.google.zxing.WriterException e)
-        {
+        } catch (com.google.zxing.WriterException e) {
             return null;
         }
         //generate an image from the byte matrix
@@ -47,45 +49,41 @@ public class QRcodeModel implements IQRCodeModel
         int height = matrix.getHeight();
 
         //create buffered image to draw to
-        Bitmap  image;
+        Bitmap image;
         image = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
 
         //iterate through the matrix and draw the pixels to the image
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 int grayValue;// = (int) (matrix.get(x, y)) & 0xff;
-                if (matrix.get(x, y) == false)
-                {
+                if (matrix.get(x, y) == false) {
                     grayValue = 0xff;
                     //  grayValue = x;
-                }
-                else
-                {
+                } else {
                     grayValue = 0;
                 }
                 image.setPixel(x, y, grayValue == 0 ? Color.BLACK : Color.WHITE);
             }
         }
-        this.bitmap=image;
+        this.bitmap = image;
+        //return the generated Bitmap
         return image;
 
     }
 
-    public void setData(String data)
-    {
+    /*
+     * All setters and getters of the class
+     * 
+     */
+    public void setData(String data) {
         this.data = data;
     }
 
-    public void setHiddenData(String hiddenData)
-    {
+    public void setHiddenData(String hiddenData) {
         this.hiddenData = hiddenData;
     }
 
-    public Bitmap getBitmap()
-    {
+    public Bitmap getBitmap() {
         return bitmap;
     }
-
 }
