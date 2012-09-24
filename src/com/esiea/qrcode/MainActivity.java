@@ -58,6 +58,7 @@ public class MainActivity extends Activity
         switch (item.getItemId())
         { 
         case R.id.quit:
+            this.qrCodeController.destroyController();
             this.finish();
             break;
         case R.id.save:

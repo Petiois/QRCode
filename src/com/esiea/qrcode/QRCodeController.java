@@ -151,4 +151,10 @@ public class QRCodeController implements IQRCodeController
     {
         this.qrView = qrcvodeView;
     }
-}
+    
+    public void destroyController()
+    {
+        qrController = null;
+    }
+    
+    }
